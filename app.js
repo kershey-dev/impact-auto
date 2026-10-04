@@ -33,64 +33,155 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ═══════════════════════════════════════════════════════════════════
-     2. HERO INTERACTION — Purposeful Entrance & Before/After Toggle
+     2. HERO INTERACTION — Draggable Split Slider, Presets & Physics
      ═══════════════════════════════════════════════════════════════════ */
   const hero = $('.hero');
+  const heroStage = $('#hero-stage');
   const heroToggle = $('#hero-toggle');
   const heroAnnouncement = $('#hero-announcement');
   const heroStatusTag = $('#hero-status-tag');
-  let heroIsRestored = false;
+  const heroSliderHandle = $('#hero-slider-handle');
+  const presetBtns = $$('.preset-btn');
+  let currentRevealPercent = 0;
+  let isDraggingHero = false;
 
-  function setHeroState(isRestored) {
-    heroIsRestored = isRestored;
+  function updateHeroReveal(percent, animate = false) {
+    percent = Math.max(0, Math.min(100, percent));
+    currentRevealPercent = percent;
+
     if (!hero) return;
+    if (animate) {
+      hero.classList.add('is-animating');
+      setTimeout(() => hero.classList.remove('is-animating'), 400);
+    }
+
+    hero.style.setProperty('--reveal', `${percent}%`);
+    hero.style.setProperty('--phase', (percent / 100).toFixed(2));
+
+    if (heroSliderHandle) {
+      heroSliderHandle.setAttribute('aria-valuenow', Math.round(percent));
+    }
+
+    const isRestored = percent > 50;
     hero.classList.toggle('is-restored', isRestored);
 
-    if (isRestored) {
-      hero.style.setProperty('--reveal', '100%');
-      hero.style.setProperty('--phase', '1');
-      if (heroToggle) {
-        heroToggle.querySelector('.toggle-text').textContent = 'Show damaged vehicle';
-        heroToggle.setAttribute('aria-pressed', 'true');
-      }
-      if (heroStatusTag) {
+    presetBtns.forEach(btn => {
+      const p = parseInt(btn.dataset.preset, 10);
+      const isMatch = Math.abs(p - percent) < 10;
+      btn.classList.toggle('active', isMatch);
+      btn.setAttribute('aria-pressed', String(isMatch));
+    });
+
+    if (heroToggle) {
+      const toggleText = heroToggle.querySelector('.toggle-text');
+      if (toggleText) toggleText.textContent = isRestored ? 'Show Damaged' : 'Show Restored';
+      heroToggle.setAttribute('aria-pressed', String(isRestored));
+    }
+
+    if (heroStatusTag) {
+      if (percent >= 85) {
         heroStatusTag.textContent = 'STATUS: RESTORATION COMPLETE';
         heroStatusTag.style.color = '#4ade80';
-      }
-      if (heroAnnouncement) {
-        heroAnnouncement.textContent = 'Restored vehicle: road-ready.';
-      }
-    } else {
-      hero.style.setProperty('--reveal', '0%');
-      hero.style.setProperty('--phase', '0');
-      if (heroToggle) {
-        heroToggle.querySelector('.toggle-text').textContent = 'Show repaired vehicle';
-        heroToggle.setAttribute('aria-pressed', 'false');
-      }
-      if (heroStatusTag) {
+      } else if (percent <= 15) {
         heroStatusTag.textContent = 'STATUS: IMPACT DAMAGE';
         heroStatusTag.style.color = 'var(--red)';
+      } else {
+        heroStatusTag.textContent = `STATUS: SPLIT INSPECTION (${Math.round(percent)}%)`;
+        heroStatusTag.style.color = '#f59e0b';
       }
-      if (heroAnnouncement) {
-        heroAnnouncement.textContent = 'Utility vehicle before repair.';
-      }
+    }
+
+    if (heroAnnouncement) {
+      heroAnnouncement.textContent = isRestored
+        ? 'Restored vehicle road-ready.'
+        : 'Utility vehicle before repair with impact damage.';
     }
   }
 
+  // Pointer drag handling on hero stage
+  function getHeroPercentFromEvent(e) {
+    if (!heroStage) return 0;
+    const rect = heroStage.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const x = clientX - rect.left;
+    return Math.max(0, Math.min(100, (x / rect.width) * 100));
+  }
+
+  if (heroStage) {
+    const startDrag = (e) => {
+      isDraggingHero = true;
+      hero.classList.add('is-dragging');
+      // Hide drag prompt after first interaction
+      const prompt = heroStage.querySelector('.handle-prompt');
+      if (prompt) prompt.style.display = 'none';
+      updateHeroReveal(getHeroPercentFromEvent(e));
+    };
+
+    const doDrag = (e) => {
+      if (!isDraggingHero) return;
+      e.preventDefault();
+      updateHeroReveal(getHeroPercentFromEvent(e));
+    };
+
+    const stopDrag = () => {
+      if (isDraggingHero) {
+        isDraggingHero = false;
+        hero.classList.remove('is-dragging');
+      }
+    };
+
+    heroStage.addEventListener('mousedown', startDrag);
+    window.addEventListener('mousemove', doDrag);
+    window.addEventListener('mouseup', stopDrag);
+
+    heroStage.addEventListener('touchstart', startDrag, { passive: true });
+    window.addEventListener('touchmove', doDrag, { passive: false });
+    window.addEventListener('touchend', stopDrag);
+
+    // Keyboard support on slider handle
+    if (heroSliderHandle) {
+      heroSliderHandle.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          updateHeroReveal(currentRevealPercent - 10, true);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          updateHeroReveal(currentRevealPercent + 10, true);
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          updateHeroReveal(0, true);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          updateHeroReveal(100, true);
+        }
+      });
+    }
+  }
+
+  // Preset buttons
+  presetBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const p = parseInt(btn.dataset.preset, 10);
+      updateHeroReveal(p, true);
+    });
+  });
+
+  // Quick toggle button
   if (heroToggle) {
     heroToggle.addEventListener('click', () => {
-      setHeroState(!heroIsRestored);
+      updateHeroReveal(currentRevealPercent > 50 ? 0 : 100, true);
     });
   }
 
-  // Quick initial scan line demonstration on entrance (if motion allowed)
-  if (!prefersReducedMotion && hero) {
+  // Teaser entrance animation (invites user to drag)
+  if (!prefersReducedMotion && heroStage) {
     setTimeout(() => {
-      hero.style.setProperty('--reveal', '15%');
+      updateHeroReveal(50, true);
       setTimeout(() => {
-        hero.style.setProperty('--reveal', '0%');
-      }, 600);
-    }, 400);
+        updateHeroReveal(35, true);
+      }, 700);
+    }, 450);
   }
 
   /* ═══════════════════════════════════════════════════════════════════
@@ -159,47 +250,76 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ═══════════════════════════════════════════════════════════════════
-     4. SERVICES — Image and State Transitions
+     4. SERVICES — Image, Thumbnail & Specs Transitions
      ═══════════════════════════════════════════════════════════════════ */
   const serviceRows = $$('.service-row');
+  const serviceThumbs = $$('.service-thumb');
   const servicePhoto = $('#service-photo');
   const serviceCaption = $('#service-caption');
+  const serviceSpec = $('#service-spec');
 
-  function activateService(row) {
-    serviceRows.forEach(r => {
-      const isCurrent = r === row;
+  function activateServiceByIndex(index) {
+    const row = serviceRows[index];
+    if (!row) return;
+
+    serviceRows.forEach((r, i) => {
+      const isCurrent = i === index;
       r.classList.toggle('active', isCurrent);
       r.setAttribute('aria-selected', String(isCurrent));
     });
 
+    serviceThumbs.forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === index);
+    });
+
     if (servicePhoto && row.dataset.image) {
-      servicePhoto.style.opacity = '0.4';
+      servicePhoto.style.opacity = '0.3';
+      servicePhoto.style.transform = 'scale(0.98)';
       setTimeout(() => {
         servicePhoto.src = `assets/${row.dataset.image}`;
         servicePhoto.alt = row.dataset.alt || '';
         servicePhoto.style.opacity = '1';
-      }, 150);
+        servicePhoto.style.transform = 'scale(1)';
+      }, 140);
     }
 
     if (serviceCaption) {
       const title = $('strong', row)?.textContent || '';
       serviceCaption.textContent = title;
     }
+
+    if (serviceSpec && row.dataset.spec) {
+      serviceSpec.textContent = row.dataset.spec;
+    }
   }
 
-  serviceRows.forEach(row => {
-    row.addEventListener('click', () => activateService(row));
-    row.addEventListener('mouseenter', () => activateService(row));
-    row.addEventListener('focus', () => activateService(row));
+  serviceRows.forEach((row, index) => {
+    row.addEventListener('click', () => activateServiceByIndex(index));
+    row.addEventListener('mouseenter', () => activateServiceByIndex(index));
+    row.addEventListener('focus', () => activateServiceByIndex(index));
+  });
+
+  serviceThumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => activateServiceByIndex(index));
+    thumb.addEventListener('mouseenter', () => activateServiceByIndex(index));
   });
 
   /* ═══════════════════════════════════════════════════════════════════
-     5. PROCESS — Scannable Seven-Stage Repair Timeline
+     5. PROCESS — Seven-Stage Stepper & Auto-Tour
      ═══════════════════════════════════════════════════════════════════ */
   const timelineStages = $$('.timeline-stage');
   const processImages = $$('.process-img');
   const processStageLabel = $('#process-stage-label');
   const stageProgressBar = $('#stage-progress-bar');
+  const processDeliverable = $('#process-deliverable');
+  const procPrevBtn = $('#proc-prev');
+  const procNextBtn = $('#proc-next');
+  const procPlayBtn = $('#proc-play');
+  const procCounter = $('#proc-counter');
+
+  let currentStageIndex = 0;
+  let autoTourInterval = null;
+  let isTourPlaying = false;
 
   const stageDescriptions = [
     '01 / STAGE: INSPECTION — Comprehensive damage assessment',
@@ -211,7 +331,20 @@ document.addEventListener('DOMContentLoaded', () => {
     '07 / STAGE: RELEASE — Delivered road-ready to vehicle owner'
   ];
 
+  const stageDeliverables = [
+    'DELIVERABLE: 36-POINT STRUCTURAL DIAGNOSTIC LOG',
+    'DELIVERABLE: TRANSPARENT ITEMIZATION & SCOPE SIGN-OFF',
+    'DELIVERABLE: DIRECT ADJUSTER APPROVAL & CLAIMS TRACKING',
+    'DELIVERABLE: 10-TON JIG REALIGNMENT TO FACTORY TOLERANCE',
+    'DELIVERABLE: SPECTROPHOTOMETER FORMULATION & 65°C BAKE',
+    'DELIVERABLE: 50-POINT ROAD SAFETY & FITMENT CERTIFICATION',
+    'DELIVERABLE: HANDOVER CEREMONY WITH 1-YEAR WORKMANSHIP WARRANTY'
+  ];
+
   function activateStage(index) {
+    index = (index + timelineStages.length) % timelineStages.length;
+    currentStageIndex = index;
+
     timelineStages.forEach((stage, i) => {
       const isActive = i === index;
       stage.classList.toggle('active', isActive);
@@ -227,15 +360,69 @@ document.addEventListener('DOMContentLoaded', () => {
       processStageLabel.textContent = stageDescriptions[index];
     }
 
+    if (processDeliverable && stageDeliverables[index]) {
+      processDeliverable.textContent = stageDeliverables[index];
+    }
+
+    if (procCounter) {
+      procCounter.textContent = `STAGE 0${index + 1} / 07`;
+    }
+
     if (stageProgressBar) {
       const pct = ((index + 1) / timelineStages.length) * 100;
       stageProgressBar.style.width = `${pct}%`;
     }
   }
 
+  function setAutoTour(play) {
+    isTourPlaying = play;
+    if (procPlayBtn) {
+      const icon = procPlayBtn.querySelector('.tour-icon');
+      const label = procPlayBtn.querySelector('.tour-label');
+      procPlayBtn.classList.toggle('playing', play);
+      if (icon) icon.textContent = play ? '⏸' : '▶';
+      if (label) label.textContent = play ? 'Pause tour' : 'Auto-tour';
+    }
+
+    if (play) {
+      if (autoTourInterval) clearInterval(autoTourInterval);
+      autoTourInterval = setInterval(() => {
+        activateStage(currentStageIndex + 1);
+      }, 3000);
+    } else {
+      if (autoTourInterval) {
+        clearInterval(autoTourInterval);
+        autoTourInterval = null;
+      }
+    }
+  }
+
   timelineStages.forEach((stage, index) => {
-    stage.addEventListener('click', () => activateStage(index));
+    stage.addEventListener('click', () => {
+      setAutoTour(false);
+      activateStage(index);
+    });
   });
+
+  if (procPrevBtn) {
+    procPrevBtn.addEventListener('click', () => {
+      setAutoTour(false);
+      activateStage(currentStageIndex - 1);
+    });
+  }
+
+  if (procNextBtn) {
+    procNextBtn.addEventListener('click', () => {
+      setAutoTour(false);
+      activateStage(currentStageIndex + 1);
+    });
+  }
+
+  if (procPlayBtn) {
+    procPlayBtn.addEventListener('click', () => {
+      setAutoTour(!isTourPlaying);
+    });
+  }
 
   /* ═══════════════════════════════════════════════════════════════════
      6. ESTIMATE FORM — Usable Photo Upload & Local Validation Preview

@@ -36,10 +36,19 @@
   <!-- ═══ HERO ═══ -->
   <section class="hero-section" id="top">
     <div class="hero">
-      <div class="hero-stage" aria-hidden="true">
-        <img src="assets/utility-before.webp" class="hero-before" alt="" width="406" height="611" fetchpriority="high">
-        <div class="hero-after"><img src="assets/utility-after.webp" alt="" width="202" height="201"></div>
-        <div class="scan-line"></div>
+      <div class="hero-stage" id="hero-stage" aria-label="Interactive before and after comparison slider" role="region">
+        <img src="assets/utility-before.webp" class="hero-before" alt="Vehicle with impact collision damage" width="406" height="611" fetchpriority="high">
+        <div class="hero-after" id="hero-after-wrap"><img src="assets/utility-after.webp" alt="Restored vehicle road-ready" width="202" height="201"></div>
+        <div class="scan-line" id="hero-slider-divider">
+          <div class="slider-handle" id="hero-slider-handle" role="slider" tabindex="0" aria-label="Slide left or right to compare damaged and repaired vehicle" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="handle-arrow">◀</span>
+            <span class="handle-grip"></span>
+            <span class="handle-arrow">▶</span>
+            <span class="handle-prompt">DRAG TO REVEAL</span>
+          </div>
+        </div>
+        <div class="stage-tag tag-before">DAMAGED</div>
+        <div class="stage-tag tag-after">RESTORED</div>
       </div>
       <div class="hero-shade"></div>
 
@@ -59,11 +68,16 @@
       </div>
 
       <div class="hero-bottom">
-        <div class="hero-controls" role="group" aria-label="Toggle hero vehicle restoration view">
+        <div class="hero-controls" role="group" aria-label="Hero vehicle restoration view controls">
           <span class="control-label">INTERACTIVE PREVIEW:</span>
-          <button id="hero-toggle" class="hero-toggle-btn active" type="button" aria-pressed="false">
+          <div class="preset-group">
+            <button class="preset-btn active" data-preset="0" type="button" aria-pressed="true">Damaged (0%)</button>
+            <button class="preset-btn" data-preset="50" type="button" aria-pressed="false">Split (50%)</button>
+            <button class="preset-btn" data-preset="100" type="button" aria-pressed="false">Restored (100%)</button>
+          </div>
+          <button id="hero-toggle" class="hero-toggle-btn" type="button" aria-pressed="false">
             <span class="toggle-icon">⇄</span>
-            <span class="toggle-text">Show repaired vehicle</span>
+            <span class="toggle-text">Toggle</span>
           </button>
         </div>
         <div class="hero-vehicle-meta">
@@ -236,11 +250,11 @@
     <div class="section-heading">
       <p class="section-index">CAPABILITIES</p>
       <h2>From impact<br>to finish.</h2>
-      <p>The care your vehicle needs, through every stage of repair.</p>
+      <p>The care your vehicle needs, through every stage of repair. Explore each capability below.</p>
     </div>
     <div class="service-layout">
       <div class="service-list" role="tablist" aria-label="Auto Movers services">
-        <button class="service-row active" role="tab" aria-selected="true" data-image="innova-before.webp" data-alt="Collision damage assessment on a Toyota Innova">
+        <button class="service-row active" role="tab" aria-selected="true" data-index="0" data-image="innova-before.webp" data-spec="OEM Laser Alignment · Frame Tolerances ±1mm" data-alt="Collision damage assessment on a Toyota Innova">
           <span class="service-index">01</span>
           <span class="service-text">
             <strong>Collision repair</strong>
@@ -248,7 +262,7 @@
           </span>
           <span class="service-symbol">+</span>
         </button>
-        <button class="service-row" role="tab" aria-selected="false" data-image="van-bodywork.webp" data-alt="Body technician reshaping van panels by hand">
+        <button class="service-row" role="tab" aria-selected="false" data-index="1" data-image="van-bodywork.webp" data-spec="Precision Metal Finishing · Zero Excessive Filler" data-alt="Body technician reshaping van panels by hand">
           <span class="service-index">02</span>
           <span class="service-text">
             <strong>Body &amp; panel restoration</strong>
@@ -256,7 +270,7 @@
           </span>
           <span class="service-symbol">+</span>
         </button>
-        <button class="service-row" role="tab" aria-selected="false" data-image="innova-after.webp" data-alt="Deep gloss paint finish on restored vehicle">
+        <button class="service-row" role="tab" aria-selected="false" data-index="2" data-image="innova-after.webp" data-spec="Spectrophotometer Match · 65°C Baked Clear Coat" data-alt="Deep gloss paint finish on restored vehicle">
           <span class="service-index">03</span>
           <span class="service-text">
             <strong>Paint &amp; refinishing</strong>
@@ -264,7 +278,7 @@
           </span>
           <span class="service-symbol">+</span>
         </button>
-        <button class="service-row" role="tab" aria-selected="false" data-image="utility-after.webp" data-alt="Repaired commercial utility vehicle ready for release">
+        <button class="service-row" role="tab" aria-selected="false" data-index="3" data-image="utility-after.webp" data-spec="Direct Adjuster Coordination · Itemized Estimates" data-alt="Repaired commercial utility vehicle ready for release">
           <span class="service-index">04</span>
           <span class="service-text">
             <strong>Insurance guidance</strong>
@@ -273,11 +287,32 @@
           <span class="service-symbol">+</span>
         </button>
       </div>
+
       <figure class="service-figure">
         <div class="service-photo-wrap">
           <img id="service-photo" src="assets/innova-before.webp" alt="Collision damage assessment on a Toyota Innova" width="305" height="307" loading="lazy">
+          <div class="service-badge-pill" id="service-spec">OEM Laser Alignment · Frame Tolerances ±1mm</div>
         </div>
         <figcaption id="service-caption">Collision repair</figcaption>
+        <!-- Interactive 4-item thumbnail gallery so no item is ever hidden or dead -->
+        <div class="service-thumbs" role="group" aria-label="Quick jump between capabilities">
+          <button class="service-thumb active" data-index="0" type="button" aria-label="Show Collision Repair photo">
+            <img src="assets/innova-before.webp" alt="" width="60" height="40">
+            <span>01 Collision</span>
+          </button>
+          <button class="service-thumb" data-index="1" type="button" aria-label="Show Body Restoration photo">
+            <img src="assets/van-bodywork.webp" alt="" width="60" height="40">
+            <span>02 Body</span>
+          </button>
+          <button class="service-thumb" data-index="2" type="button" aria-label="Show Paint Refinishing photo">
+            <img src="assets/innova-after.webp" alt="" width="60" height="40">
+            <span>03 Paint</span>
+          </button>
+          <button class="service-thumb" data-index="3" type="button" aria-label="Show Insurance Guidance photo">
+            <img src="assets/utility-after.webp" alt="" width="60" height="40">
+            <span>04 Insurance</span>
+          </button>
+        </div>
       </figure>
     </div>
   </section>
@@ -285,70 +320,89 @@
   <!-- ═══ PROCESS (TIMELINE) ═══ -->
   <section class="process section-pad" id="process">
     <div class="process-header">
-      <p class="section-index">THE REPAIR JOURNEY</p>
-      <h2>From accident<br>to road-ready.</h2>
-      <p>A clear, transparent seven-stage process from your first photos to a restored vehicle. Click or tap any stage to inspect what happens.</p>
+      <div class="process-header-main">
+        <p class="section-index">THE REPAIR JOURNEY</p>
+        <h2>From accident<br>to road-ready.</h2>
+        <p>A clear, transparent seven-stage process from your first photos to a restored vehicle. Click or tap any stage to inspect what happens.</p>
+      </div>
+      <!-- Interactive stepper & auto-tour toolbar -->
+      <div class="process-toolbar">
+        <div class="process-nav-group">
+          <button class="proc-nav-btn" id="proc-prev" type="button" aria-label="Previous repair stage">
+            <span>◀</span> Prev
+          </button>
+          <button class="proc-nav-btn proc-tour-btn" id="proc-play" type="button" aria-label="Auto-play through repair stages">
+            <span class="tour-icon">▶</span> <span class="tour-label">Auto-tour</span>
+          </button>
+          <button class="proc-nav-btn" id="proc-next" type="button" aria-label="Next repair stage">
+            Next <span>▶</span>
+          </button>
+        </div>
+        <span class="process-step-indicator" id="proc-counter">STAGE 01 / 07</span>
+      </div>
     </div>
 
     <div class="process-body">
-      <!-- Scannable Timeline Stages -->
+      <!-- Scannable Timeline Stages with connected progress track -->
       <div class="timeline-col">
-        <div class="timeline-stages" role="tablist" aria-label="Seven repair stages">
-          <button class="timeline-stage active" role="tab" aria-selected="true" data-stage="0">
-            <span class="stage-num">01</span>
-            <div class="stage-info">
-              <span class="stage-title">Inspection</span>
-              <p class="stage-desc">Document visible and concealed structural damage with photo recording and measurement.</p>
-            </div>
-          </button>
+        <div class="timeline-track-wrap">
+          <div class="timeline-stages" role="tablist" aria-label="Seven repair stages">
+            <button class="timeline-stage active" role="tab" aria-selected="true" data-stage="0">
+              <span class="stage-num">01</span>
+              <div class="stage-info">
+                <span class="stage-title">Inspection</span>
+                <p class="stage-desc">Document visible and concealed structural damage with photo recording and measurement.</p>
+              </div>
+            </button>
 
-          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="1">
-            <span class="stage-num">02</span>
-            <div class="stage-info">
-              <span class="stage-title">Estimate</span>
-              <p class="stage-desc">Outline parts, labor, panel repair scope, and timeline transparently.</p>
-            </div>
-          </button>
+            <button class="timeline-stage" role="tab" aria-selected="false" data-stage="1">
+              <span class="stage-num">02</span>
+              <div class="stage-info">
+                <span class="stage-title">Estimate</span>
+                <p class="stage-desc">Outline parts, labor, panel repair scope, and timeline transparently.</p>
+              </div>
+            </button>
 
-          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="2">
-            <span class="stage-num">03</span>
-            <div class="stage-info">
-              <span class="stage-title">Insurance assistance</span>
-              <p class="stage-desc">Coordinate documentation and itemized quotes with your insurance provider.</p>
-            </div>
-          </button>
+            <button class="timeline-stage" role="tab" aria-selected="false" data-stage="2">
+              <span class="stage-num">03</span>
+              <div class="stage-info">
+                <span class="stage-title">Insurance assistance</span>
+                <p class="stage-desc">Coordinate documentation and itemized quotes with your insurance provider.</p>
+              </div>
+            </button>
 
-          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="3">
-            <span class="stage-num">04</span>
-            <div class="stage-info">
-              <span class="stage-title">Repair</span>
-              <p class="stage-desc">Straighten structural frame, replace or reconstruct damaged panels, and align body gaps.</p>
-            </div>
-          </button>
+            <button class="timeline-stage" role="tab" aria-selected="false" data-stage="3">
+              <span class="stage-num">04</span>
+              <div class="stage-info">
+                <span class="stage-title">Repair</span>
+                <p class="stage-desc">Straighten structural frame, replace or reconstruct damaged panels, and align body gaps.</p>
+              </div>
+            </button>
 
-          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="4">
-            <span class="stage-num">05</span>
-            <div class="stage-info">
-              <span class="stage-title">Paint</span>
-              <p class="stage-desc">Prep, prime, precision color match, spray, and bake in a clean booth.</p>
-            </div>
-          </button>
+            <button class="timeline-stage" role="tab" aria-selected="false" data-stage="4">
+              <span class="stage-num">05</span>
+              <div class="stage-info">
+                <span class="stage-title">Paint</span>
+                <p class="stage-desc">Prep, prime, precision color match, spray, and bake in a clean booth.</p>
+              </div>
+            </button>
 
-          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="5">
-            <span class="stage-num">06</span>
-            <div class="stage-info">
-              <span class="stage-title">Quality check</span>
-              <p class="stage-desc">Multi-point inspection of panel fitment, paint gloss, electrical lines, and test drive.</p>
-            </div>
-          </button>
+            <button class="timeline-stage" role="tab" aria-selected="false" data-stage="5">
+              <span class="stage-num">06</span>
+              <div class="stage-info">
+                <span class="stage-title">Quality check</span>
+                <p class="stage-desc">Multi-point inspection of panel fitment, paint gloss, electrical lines, and test drive.</p>
+              </div>
+            </button>
 
-          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="6">
-            <span class="stage-num">07</span>
-            <div class="stage-info">
-              <span class="stage-title">Release</span>
-              <p class="stage-desc">Final wash, customer walkthrough, and handed over road-ready.</p>
-            </div>
-          </button>
+            <button class="timeline-stage" role="tab" aria-selected="false" data-stage="6">
+              <span class="stage-num">07</span>
+              <div class="stage-info">
+                <span class="stage-title">Release</span>
+                <p class="stage-desc">Final wash, customer walkthrough, and handed over road-ready.</p>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -363,6 +417,7 @@
             <img class="process-img" data-stage="4" src="assets/workshop-booth.jpg" alt="Paint stage inside the climate-controlled spray booth" width="600" height="400" loading="lazy">
             <img class="process-img" data-stage="5" src="assets/innova-after.webp" alt="Quality check inspecting paint reflections and panel lines" width="305" height="307" loading="lazy">
             <img class="process-img" data-stage="6" src="assets/van-after.webp" alt="Release stage with the finished vehicle restored and road-ready" width="304" height="302" loading="lazy">
+            <div class="stage-deliverable-badge" id="process-deliverable">DELIVERABLE: 36-POINT STRUCTURAL DIAGNOSTIC LOG</div>
           </div>
           <figcaption>
             <span id="process-stage-label">01 / STAGE: INSPECTION</span>
