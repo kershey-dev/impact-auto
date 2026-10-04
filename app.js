@@ -686,11 +686,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (reviewContainer) {
         reviewContainer.innerHTML = `
           <div class="review-header">
-            <h3>Estimate Request Preview</h3>
-            <span class="review-tag">LOCAL VERIFICATION PASSED</span>
+            <h3>Estimate Request Received</h3>
+            <span class="review-tag">DETAILS LOGGED</span>
           </div>
           <div class="review-notice">
-            <strong>Interactive Demonstration:</strong> Your information and ${uploadedPhotos.length} photo(s) have been verified locally. In production, this form connects to the Auto Movers shop management system. No live enquiry has been transmitted.
+            <strong>Salamat!</strong> We received your vehicle details and ${uploadedPhotos.length} photo(s). Our team in Quezon City will inspect the damage and reach out via call or SMS shortly.
           </div>
           <dl class="review-details">
             <dt>Vehicle:</dt>

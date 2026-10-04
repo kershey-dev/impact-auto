@@ -609,6 +609,33 @@ p {
   pointer-events: auto;
 }
 
+/* Strike-through line on DAMAGE */
+.hero-title .strike-word {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+}
+
+.hero-title .strike-word::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 52%;
+  height: clamp(4px, 0.6vw, 7px);
+  background: var(--red);
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 0 12px rgba(215, 53, 50, 0.7);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.hero.is-restored .hero-title-restored .strike-word::after {
+  transform: translateY(-50%) scaleX(1);
+}
+
 /* Live Diagnostic Telemetry Pill */
 .hero-telemetry-pill {
   display: inline-flex;
@@ -803,6 +830,45 @@ p {
 
 
 /* ═══════════════════════════════════════════════════════════════════
+   TRUST BAR / LOCAL CREDIBILITY STRIP
+   ═══════════════════════════════════════════════════════════════════ */
+.trust-bar {
+  background: var(--ink-surface);
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  color: var(--text-light);
+  padding: 14px var(--gutter);
+  position: relative;
+  z-index: 10;
+}
+
+.trust-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #adb8bc;
+}
+
+.trust-item strong {
+  color: #fff;
+  font-weight: 800;
+}
+
+.trust-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    INTRO SECTION — Had an accident?
    ═══════════════════════════════════════════════════════════════════ */
 .intro {
@@ -812,6 +878,13 @@ p {
   gap: clamp(32px, 6vw, 80px);
   background: var(--paper);
   border-bottom: 1px solid var(--line-light);
+}
+
+.intro-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .intro-copy .intro-heading {
@@ -1726,6 +1799,24 @@ p {
   line-height: 1.55;
 }
 
+.insurer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.insurer-tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  background: rgba(17, 58, 87, 0.08);
+  border: 1px solid rgba(17, 58, 87, 0.2);
+  color: var(--blue);
+  border-radius: var(--radius-sm);
+}
+
 
 /* ═══════════════════════════════════════════════════════════════════
    ESTIMATE FORM — Usable, Polished with Immediate Feedback
@@ -1757,6 +1848,37 @@ p {
   color: #d1e2ee;
   margin: 18px 0 24px;
   max-width: 420px;
+}
+
+.estimate-quick-chat {
+  background: rgba(14, 39, 58, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 3px solid #0084ff;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 420px;
+  margin-top: 20px;
+}
+
+.estimate-quick-chat span {
+  font-size: 12px;
+  font-weight: 700;
+  color: #c5e1f7;
+}
+
+.estimate-quick-chat .button {
+  font-size: 11px;
+  padding: 10px 16px;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.estimate-quick-chat .button:hover {
+  background: #0084ff;
+  border-color: #0084ff;
+  color: #fff;
 }
 
 .demo-badge {
@@ -2227,7 +2349,7 @@ p {
 }
 
 .about-copy h2 span {
-  color: #6b777d;
+  color: #556168;
 }
 
 .about-copy p {
@@ -2598,7 +2720,7 @@ p {
   }
 
   .mobile-cta .cta-msg {
-    background: var(--ink);
+    background: #0084ff;
     color: #fff;
   }
 
