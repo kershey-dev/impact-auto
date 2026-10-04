@@ -63,6 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
       heroSliderHandle.setAttribute('aria-valuenow', Math.round(percent));
     }
 
+    const isRestored = percent >= 50;
+    hero.classList.toggle('is-restored', isRestored);
+
     presetBtns.forEach(btn => {
       const p = parseInt(btn.dataset.preset, 10);
       const isMatch = Math.abs(p - percent) < 12;
@@ -71,10 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (heroToggle) {
-      const isRestored = percent > 50;
       const toggleText = heroToggle.querySelector('.toggle-text');
       if (toggleText) toggleText.textContent = isRestored ? 'Show Damaged' : 'Show Restored';
       heroToggle.setAttribute('aria-pressed', String(isRestored));
+    }
+
+    if (heroAnnouncement) {
+      heroAnnouncement.textContent = isRestored
+        ? 'Restored vehicle: road-ready.'
+        : 'Utility vehicle before repair with impact damage.';
     }
 
     if (heroStatusTag) {
