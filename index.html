@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101518">
+<meta name="description" content="Auto Movers Corporation — Professional collision repair, precision body restoration, paintwork, and insurance claim guidance in Quezon City, Philippines.">
+<title>Auto Movers — From Impact to Road-Ready</title>
+<link rel="preload" href="assets/manrope-800.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="assets/utility-before.webp" as="image">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="nav">
+  <a class="wordmark" href="#top" aria-label="Auto Movers Corporation home">
+    <span>AUTO<span class="accent">MOVERS</span><i></i></span>
+    <small>CORPORATION</small>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="#work">The Work</a>
+    <a href="#services">Services</a>
+    <a href="#process">The Process</a>
+    <a href="#about">Our Workshop</a>
+  </nav>
+  <a class="button nav-cta" href="#estimate">Get an estimate</a>
+  <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</header>
+
+<main id="main">
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero-section" id="top">
+    <div class="hero">
+      <div class="hero-stage" aria-hidden="true">
+        <img src="assets/utility-before.webp" class="hero-before" alt="" width="406" height="611" fetchpriority="high">
+        <div class="hero-after"><img src="assets/utility-after.webp" alt="" width="202" height="201"></div>
+        <div class="scan-line"></div>
+      </div>
+      <div class="hero-shade"></div>
+
+      <div class="hero-copy">
+        <p class="hero-service">COLLISION REPAIR · BODY RESTORATION · PAINTWORK<br>QUEZON CITY, PHILIPPINES</p>
+        <div class="hero-headlines">
+          <h1 class="hero-damage">Damage<br>doesn't have<br>to be permanent.</h1>
+          <p class="hero-restored" aria-hidden="true">Restored.<br>Road-ready.</p>
+        </div>
+        <p class="sr-only" id="hero-announcement" aria-live="polite">Utility vehicle before repair.</p>
+        <p class="hero-description hero-description-before">Collision repair, body restoration, paintwork, and guidance through insurance claims.</p>
+        <p class="hero-description hero-description-after" aria-hidden="true">A clear process, from damage assessment to the finished repair.</p>
+        <div class="hero-actions">
+          <a class="button red" href="#estimate">Get an estimate</a>
+          <a class="button outline" href="#work">View repairs</a>
+        </div>
+      </div>
+
+      <div class="hero-bottom">
+        <div class="hero-controls" role="group" aria-label="Toggle hero vehicle restoration view">
+          <span class="control-label">INTERACTIVE PREVIEW:</span>
+          <button id="hero-toggle" class="hero-toggle-btn active" type="button" aria-pressed="false">
+            <span class="toggle-icon">⇄</span>
+            <span class="toggle-text">Show repaired vehicle</span>
+          </button>
+        </div>
+        <div class="hero-vehicle-meta">
+          <span class="meta-tag">CASE STUDY / 001</span>
+          <span class="meta-title">UTILITY VEHICLE · FRONT &amp; SIDE COLLISION</span>
+          <span class="meta-status" id="hero-status-tag">STATUS: IMPACT DAMAGE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INTRO ═══ -->
+  <section class="intro section-pad" aria-label="How to get started">
+    <div class="intro-copy">
+      <p class="section-index">FAST ASSESSMENT</p>
+      <h2 class="intro-heading">Had an accident?</h2>
+      <p>Whether you're using insurance, paying directly, or still figuring things out, send us photos of the damage and begin an initial repair estimate.</p>
+      <div class="steps">
+        <div class="step-card">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Send photos</h3>
+            <p>Upload clear photos of the damaged area and overall vehicle.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Get an estimate</h3>
+            <p>We review the damage scope, parts needed, and labor requirements.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">03</span>
+          <div>
+            <h3>Bring in your vehicle</h3>
+            <p>Drop off at our Quezon City shop for teardown and precision rebuild.</p>
+          </div>
+        </div>
+      </div>
+      <a class="button red" href="#estimate">Send damage photos</a>
+    </div>
+    <figure class="intro-image">
+      <img src="assets/van-before.webp" alt="Damaged service van before repair" width="304" height="305" loading="lazy">
+      <figcaption>Start with a clear photo of the damage for faster assessment.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ═══ SELECTED REPAIRS (GALLERY) ═══ -->
+  <section class="work section-pad" id="work">
+    <div class="work-header">
+      <div class="section-heading">
+        <p class="section-index">PROVEN WORKMANSHIP</p>
+        <h2>Real damage.<br><span>Real repairs.</span></h2>
+        <p>Actual vehicles. Actual work. See how damaged vehicles get back to the road.</p>
+      </div>
+      <div class="work-hint">
+        <p>Switch between <strong>Before</strong> and <strong>After</strong> to examine the finished panel alignment, body lines, and color match.</p>
+      </div>
+    </div>
+
+    <!-- MAIN VISUAL PROOF (FEATURED CASE STUDY) -->
+    <article class="project-featured" aria-labelledby="innova-title">
+      <div class="featured-content">
+        <div class="case-badge">MAIN VISUAL PROOF · FEATURED CASE STUDY</div>
+        <div class="project-top">
+          <div>
+            <h3 id="innova-title">Toyota Innova</h3>
+            <p class="case-subtitle">Rear Quarter Impact &amp; Deep Metal Reconstruction</p>
+          </div>
+          <span class="project-num">CASE 01</span>
+        </div>
+
+        <div class="case-specs">
+          <div class="spec-item">
+            <span class="spec-label">DAMAGE ASSESSMENT</span>
+            <span class="spec-val">Severe rear quarter crease, inner wheel-arch distortion, bumper separation.</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">RESTORATION SCOPE</span>
+            <span class="spec-val">Hydraulic pull alignment, precision metal finishing, multi-stage OEM paint matching, protective clear coat.</span>
+          </div>
+        </div>
+
+        <div class="comparison-switch" role="group" aria-label="Innova before and after view switch">
+          <span class="switch-label">VIEW STATE:</span>
+          <button class="switch-btn" type="button" data-view="before" aria-pressed="false">Before repair</button>
+          <button class="switch-btn active" type="button" data-view="after" aria-pressed="true">After repair</button>
+        </div>
+      </div>
+
+      <div class="comparison-frame" data-active="after">
+        <div class="image-crossfade">
+          <img class="crossfade-img img-before" src="assets/innova-before.webp" alt="Toyota Innova rear quarter showing heavy collision damage" width="305" height="307" loading="lazy">
+          <img class="crossfade-img img-after active" src="assets/innova-after.webp" alt="Toyota Innova rear quarter fully restored with flawless paint finish" width="305" height="307" loading="lazy">
+        </div>
+        <div class="comparison-overlay">
+          <span class="comparison-badge" aria-live="polite">AFTER REPAIR · FINISHED</span>
+          <span class="comparison-hint">Tap to toggle Before / After</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- SUPPORTING EXAMPLES -->
+    <div class="project-pair">
+      <!-- Supporting Case 02: Utility Vehicle -->
+      <article class="project-card" aria-labelledby="utility-title">
+        <div class="card-header">
+          <div>
+            <span class="card-num">CASE 02</span>
+            <h3 id="utility-title">Built to work.<br>Back to work.</h3>
+            <p class="card-desc">Commercial utility vehicle · Driver-side collision restoration</p>
+          </div>
+          <div class="comparison-switch compact" role="group" aria-label="Utility vehicle view switch">
+            <button class="switch-btn" type="button" data-view="before" aria-pressed="false">Before</button>
+            <button class="switch-btn active" type="button" data-view="after" aria-pressed="true">After</button>
+          </div>
+        </div>
+
+        <div class="comparison-frame compact" data-active="after">
+          <div class="image-crossfade">
+            <img class="crossfade-img img-before" src="assets/utility-before.webp" alt="White utility vehicle before repair with crushed front and side fender" width="202" height="201" loading="lazy">
+            <img class="crossfade-img img-after active" src="assets/utility-after.webp" alt="White utility vehicle restored and road-ready after collision repair" width="202" height="201" loading="lazy">
+          </div>
+          <div class="comparison-overlay">
+            <span class="comparison-badge" aria-live="polite">AFTER REPAIR</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>STRUCTURAL REALIGNMENT · HEAVY PANEL RESTORATION</span>
+        </div>
+      </article>
+
+      <!-- Supporting Case 03: Service Van -->
+      <article class="project-card" aria-labelledby="van-title">
+        <div class="card-header">
+          <div>
+            <span class="card-num">CASE 03</span>
+            <h3 id="van-title">A new chapter<br>for a familiar van.</h3>
+            <p class="card-desc">Service postal van · Front-end impact &amp; chassis rebuild</p>
+          </div>
+          <div class="comparison-switch compact" role="group" aria-label="Service van view switch">
+            <button class="switch-btn" type="button" data-view="before" aria-pressed="false">Before</button>
+            <button class="switch-btn active" type="button" data-view="after" aria-pressed="true">After</button>
+          </div>
+        </div>
+
+        <div class="comparison-frame compact" data-active="after">
+          <div class="image-crossfade">
+            <img class="crossfade-img img-before" src="assets/van-before.webp" alt="Service van with extensive front-end smash before repair" width="304" height="305" loading="lazy">
+            <img class="crossfade-img img-after active" src="assets/van-after.webp" alt="Service van completely restored with pristine front assembly" width="304" height="302" loading="lazy">
+          </div>
+          <div class="comparison-overlay">
+            <span class="comparison-badge" aria-live="polite">AFTER REPAIR</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>FRONT CRUSH BOX RESTORATION · REFINISHING</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="work-footer-note">
+      <p>All examples show real vehicles repaired at our workshop in Quezon City. Photos show authentic results without artificial filters.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="services section-pad" id="services">
+    <div class="section-heading">
+      <p class="section-index">CAPABILITIES</p>
+      <h2>From impact<br>to finish.</h2>
+      <p>The care your vehicle needs, through every stage of repair.</p>
+    </div>
+    <div class="service-layout">
+      <div class="service-list" role="tablist" aria-label="Auto Movers services">
+        <button class="service-row active" role="tab" aria-selected="true" data-image="innova-before.webp" data-alt="Collision damage assessment on a Toyota Innova">
+          <span class="service-index">01</span>
+          <span class="service-text">
+            <strong>Collision repair</strong>
+            <small>Frame straightening, unibody realignment, structural integrity restoration, and collision damage assessment.</small>
+          </span>
+          <span class="service-symbol">+</span>
+        </button>
+        <button class="service-row" role="tab" aria-selected="false" data-image="van-bodywork.webp" data-alt="Body technician reshaping van panels by hand">
+          <span class="service-index">02</span>
+          <span class="service-text">
+            <strong>Body &amp; panel restoration</strong>
+            <small>Careful panel pulling, metal finishing, dent extraction, and exterior surface restoration without excessive filler.</small>
+          </span>
+          <span class="service-symbol">+</span>
+        </button>
+        <button class="service-row" role="tab" aria-selected="false" data-image="innova-after.webp" data-alt="Deep gloss paint finish on restored vehicle">
+          <span class="service-index">03</span>
+          <span class="service-text">
+            <strong>Paint &amp; refinishing</strong>
+            <small>Computerized paint matching, climate-controlled spray booth application, and scratch-resistant clear coat curing.</small>
+          </span>
+          <span class="service-symbol">+</span>
+        </button>
+        <button class="service-row" role="tab" aria-selected="false" data-image="utility-after.webp" data-alt="Repaired commercial utility vehicle ready for release">
+          <span class="service-index">04</span>
+          <span class="service-text">
+            <strong>Insurance guidance</strong>
+            <small>Help navigating claims, documentation, insurance adjuster inspections, and itemized repair estimates.</small>
+          </span>
+          <span class="service-symbol">+</span>
+        </button>
+      </div>
+      <figure class="service-figure">
+        <div class="service-photo-wrap">
+          <img id="service-photo" src="assets/innova-before.webp" alt="Collision damage assessment on a Toyota Innova" width="305" height="307" loading="lazy">
+        </div>
+        <figcaption id="service-caption">Collision repair</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ PROCESS (TIMELINE) ═══ -->
+  <section class="process section-pad" id="process">
+    <div class="process-header">
+      <p class="section-index">THE REPAIR JOURNEY</p>
+      <h2>From accident<br>to road-ready.</h2>
+      <p>A clear, transparent seven-stage process from your first photos to a restored vehicle. Click or tap any stage to inspect what happens.</p>
+    </div>
+
+    <div class="process-body">
+      <!-- Scannable Timeline Stages -->
+      <div class="timeline-col">
+        <div class="timeline-stages" role="tablist" aria-label="Seven repair stages">
+          <button class="timeline-stage active" role="tab" aria-selected="true" data-stage="0">
+            <span class="stage-num">01</span>
+            <div class="stage-info">
+              <span class="stage-title">Inspection</span>
+              <p class="stage-desc">Document visible and concealed structural damage with photo recording and measurement.</p>
+            </div>
+          </button>
+
+          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="1">
+            <span class="stage-num">02</span>
+            <div class="stage-info">
+              <span class="stage-title">Estimate</span>
+              <p class="stage-desc">Outline parts, labor, panel repair scope, and timeline transparently.</p>
+            </div>
+          </button>
+
+          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="2">
+            <span class="stage-num">03</span>
+            <div class="stage-info">
+              <span class="stage-title">Insurance assistance</span>
+              <p class="stage-desc">Coordinate documentation and itemized quotes with your insurance provider.</p>
+            </div>
+          </button>
+
+          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="3">
+            <span class="stage-num">04</span>
+            <div class="stage-info">
+              <span class="stage-title">Repair</span>
+              <p class="stage-desc">Straighten structural frame, replace or reconstruct damaged panels, and align body gaps.</p>
+            </div>
+          </button>
+
+          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="4">
+            <span class="stage-num">05</span>
+            <div class="stage-info">
+              <span class="stage-title">Paint</span>
+              <p class="stage-desc">Prep, prime, precision color match, spray, and bake in a clean booth.</p>
+            </div>
+          </button>
+
+          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="5">
+            <span class="stage-num">06</span>
+            <div class="stage-info">
+              <span class="stage-title">Quality check</span>
+              <p class="stage-desc">Multi-point inspection of panel fitment, paint gloss, electrical lines, and test drive.</p>
+            </div>
+          </button>
+
+          <button class="timeline-stage" role="tab" aria-selected="false" data-stage="6">
+            <span class="stage-num">07</span>
+            <div class="stage-info">
+              <span class="stage-title">Release</span>
+              <p class="stage-desc">Final wash, customer walkthrough, and handed over road-ready.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stage Photo & Explanation Panel -->
+      <div class="process-visual">
+        <figure class="process-figure">
+          <div class="process-image-stack">
+            <img class="process-img active" data-stage="0" src="assets/van-before.webp" alt="Inspection stage showing initial collision impact assessment" width="304" height="305" loading="lazy">
+            <img class="process-img" data-stage="1" src="assets/innova-before.webp" alt="Estimate stage reviewing repair plan and panel restoration requirements" width="305" height="307" loading="lazy">
+            <img class="process-img" data-stage="2" src="assets/utility-before.webp" alt="Insurance assistance verifying claim details and parts catalog" width="406" height="611" loading="lazy">
+            <img class="process-img" data-stage="3" src="assets/van-bodywork.webp" alt="Repair stage showing technicians reshaping exterior panels" width="304" height="305" loading="lazy">
+            <img class="process-img" data-stage="4" src="assets/workshop-booth.jpg" alt="Paint stage inside the climate-controlled spray booth" width="600" height="400" loading="lazy">
+            <img class="process-img" data-stage="5" src="assets/innova-after.webp" alt="Quality check inspecting paint reflections and panel lines" width="305" height="307" loading="lazy">
+            <img class="process-img" data-stage="6" src="assets/van-after.webp" alt="Release stage with the finished vehicle restored and road-ready" width="304" height="302" loading="lazy">
+          </div>
+          <figcaption>
+            <span id="process-stage-label">01 / STAGE: INSPECTION</span>
+            <span id="process-car-label">VEHICLE RESTORATION WORKFLOW</span>
+          </figcaption>
+          <div class="stage-progress-indicator" aria-hidden="true">
+            <div id="stage-progress-bar" class="stage-progress-bar"></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INSURANCE ═══ -->
+  <section class="insurance section-pad">
+    <div class="insurance-left">
+      <p class="section-index">CLAIMS &amp; DIRECT REPAIRS</p>
+      <h2>Insurance can be<br>complicated.<br><span>The repair shouldn't be.</span></h2>
+      <p class="insurance-summary">Whether you're filing an insurance claim or paying directly, Auto Movers helps you navigate the technical assessment, required documents, and next steps.</p>
+      <a class="button red" href="#estimate">Ask about your repair</a>
+    </div>
+    <div class="insurance-paths">
+      <div class="path-box">
+        <div class="path-icon">📄</div>
+        <h3>Using insurance?</h3>
+        <p>Tell us about the damage and your insurer. We provide itemized quotes, photo documentation, and guide you through adjuster inspections. Your insurer approves coverage and claims.</p>
+      </div>
+      <div class="path-box">
+        <div class="path-icon">🔧</div>
+        <h3>Paying directly?</h3>
+        <p>Send clear photos to receive a preliminary cost estimate. For full structural evaluation, visit our shop for an in-person assessment before work begins.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ESTIMATE FORM ═══ -->
+  <section class="estimate section-pad" id="estimate">
+    <div class="estimate-heading">
+      <p class="section-index">ONLINE ESTIMATE PREVIEW</p>
+      <h2>Show us<br>the damage.</h2>
+      <p>Upload a few clear photos and tell us about your vehicle. Our team will review the damage and prepare an initial assessment.</p>
+      <div class="demo-badge">
+        <span class="badge-dot"></span>
+        <span>Interactive demonstration prototype · Form data is processed locally</span>
+      </div>
+    </div>
+
+    <form id="estimate-form" novalidate>
+      <!-- Fieldset 1: Vehicle -->
+      <fieldset>
+        <legend>01 / VEHICLE INFORMATION</legend>
+        <div class="form-grid">
+          <label>
+            Make &amp; model <span class="req">*</span>
+            <input name="vehicle" autocomplete="off" placeholder="e.g. Toyota Innova, Honda Civic" maxlength="100" required>
+            <span class="field-msg" id="msg-vehicle"></span>
+          </label>
+          <label>
+            Year <span class="optional">(optional)</span>
+            <input name="year" type="number" min="1960" max="2027" placeholder="e.g. 2021">
+            <span class="field-msg" id="msg-year"></span>
+          </label>
+        </div>
+
+        <div class="damage-type-group">
+          <span class="group-label">Primary type of damage:</span>
+          <div class="chips-row">
+            <label class="chip"><input type="radio" name="damage_type" value="Collision" checked> <span>Collision Impact</span></label>
+            <label class="chip"><input type="radio" name="damage_type" value="Dent / Crease"> <span>Dent &amp; Panel Crease</span></label>
+            <label class="chip"><input type="radio" name="damage_type" value="Paint / Scuff"> <span>Paint &amp; Scratches</span></label>
+            <label class="chip"><input type="radio" name="damage_type" value="Full Restoration"> <span>Full Restoration</span></label>
+          </div>
+        </div>
+
+        <label class="wide-label">
+          Describe what happened <span class="req">*</span>
+          <textarea name="damage" placeholder="Briefly describe the impacted areas (e.g. driver side rear door dented, bumper clips loose, scratches down to primer)..." maxlength="1500" rows="3" required></textarea>
+          <span class="field-msg" id="msg-damage"></span>
+        </label>
+      </fieldset>
+
+      <!-- Fieldset 2: Photos -->
+      <fieldset>
+        <legend>02 / DAMAGE PHOTOGRAPHS</legend>
+        <div class="upload-guidelines">
+          <p>For an accurate estimate, attach clear photos in daylight: a full vehicle angle, a medium angle, and a close-up of the damage.</p>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+          <input id="photos" name="photos" type="file" multiple accept="image/jpeg,image/png,image/webp" aria-label="Upload damage photos">
+          <div class="upload-prompt">
+            <div class="upload-icon">📷</div>
+            <strong>Click to upload or drag photos here</strong>
+            <span>Accepts JPG, PNG, or WebP · Up to 6 photos · Max 10 MB each</span>
+          </div>
+          <div class="upload-sample-slots" aria-hidden="true">
+            <div class="slot-hint">+ Full vehicle</div>
+            <div class="slot-hint">+ Angle view</div>
+            <div class="slot-hint">+ Damage close-up</div>
+          </div>
+        </div>
+
+        <div class="upload-status-row">
+          <span id="photo-counter" class="photo-counter">0 of 6 photos selected</span>
+          <span id="photo-error" class="form-error" role="alert"></span>
+        </div>
+
+        <div id="photo-previews" class="photo-previews" aria-live="polite"></div>
+      </fieldset>
+
+      <!-- Fieldset 3: Contact & Insurance -->
+      <fieldset>
+        <legend>03 / CONTACT &amp; INSURANCE</legend>
+        <div class="insurance-options">
+          <span class="group-label">Are you using insurance?</span>
+          <div class="radio-row">
+            <label><input type="radio" name="insurance" value="Yes"> Yes, filing a claim</label>
+            <label><input type="radio" name="insurance" value="No"> No, direct payment</label>
+            <label><input type="radio" name="insurance" value="Not sure" checked> Not sure yet</label>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Your full name <span class="req">*</span>
+            <input name="name" autocomplete="name" required maxlength="100" placeholder="e.g. Juan dela Cruz">
+            <span class="field-msg" id="msg-name"></span>
+          </label>
+          <label>
+            Phone number <span class="req">*</span>
+            <input name="phone" type="tel" autocomplete="tel" required maxlength="30" placeholder="09XX XXX XXXX">
+            <span class="field-msg" id="msg-phone"></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="form-submit-row">
+        <p class="form-help">Photos remain locally in your browser for this prototype demonstration. In production, requests connect to the Auto Movers shop management system.</p>
+        <button class="button submit-btn" type="submit">Request Initial Estimate →</button>
+      </div>
+
+      <!-- Completion Feedback Card (Demo Preview) -->
+      <div id="request-review" class="request-review" hidden tabindex="-1" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <!-- ═══ ABOUT OUR WORKSHOP ═══ -->
+  <section class="about section-pad" id="about">
+    <div class="about-image">
+      <img src="assets/workshop-booth.jpg" alt="Inside the climate-controlled spray and baking booth at Auto Movers workshop" width="600" height="400" loading="lazy">
+    </div>
+    <div class="about-copy">
+      <p class="section-index">OUR FACILITY</p>
+      <h2>Your trust.<br><span>Our passion.</span></h2>
+      <p>Behind every finished repair is work you don't always see: precise hydraulic measurement, hand hammer-and-dolly bodywork, rust-inhibiting primer seals, and climate-controlled baking.</p>
+      <p>We treat every customer vehicle like our own — returning it safely and proudly back to the road.</p>
+      <div class="about-location">
+        <strong>Auto Movers Corporation</strong>
+        <span>Quezon City, Metro Manila, Philippines</span>
+      </div>
+      <a class="text-link" href="https://www.facebook.com/profile.php?id=100087292936473" target="_blank" rel="noopener noreferrer">Visit Auto Movers on Facebook →</a>
+    </div>
+  </section>
+
+  <!-- ═══ CTA SECTION ═══ -->
+  <section class="location section-pad">
+    <h2>Let's get you<br>back on the road.</h2>
+    <div>
+      <p>Have damage photos ready? Send them over or visit our Quezon City shop for a detailed teardown estimate.</p>
+      <div class="location-actions">
+        <a class="button dark" href="#estimate">Get an estimate</a>
+        <a class="button outline-dark" href="https://www.facebook.com/profile.php?id=100087292936473" target="_blank" rel="noopener noreferrer">Message Auto Movers</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer section-pad">
+  <div class="footer-brand">
+    <a class="wordmark" href="#top" aria-label="Auto Movers Corporation top">
+      <span>AUTO<span class="accent">MOVERS</span><i></i></span>
+      <small>CORPORATION</small>
+    </a>
+    <p class="tagline">Your Trust, Our Passion. Dedicated collision restoration &amp; paint finishing.</p>
+  </div>
+  <div class="footer-links">
+    <a href="#work">The Work</a>
+    <a href="#services">Services</a>
+    <a href="#process">The Process</a>
+    <a href="#estimate">Get an Estimate</a>
+    <a href="#top">Back to top ↑</a>
+  </div>
+  <div class="footer-bottom">
+    <small>© Auto Movers Corporation · Quezon City, Philippines · Interactive Design Prototype</small>
+  </div>
+</footer>
+
+<div class="mobile-cta" hidden>
+  <a class="cta-msg" href="https://www.facebook.com/profile.php?id=100087292936473" target="_blank" rel="noopener noreferrer">Message</a>
+  <a class="cta-est" href="#estimate">Get an estimate</a>
+</div>
+
+</body>
+</html>
