@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroAnnouncement = $('#hero-announcement');
   const heroStatusTag = $('#hero-status-tag');
   const heroSliderHandle = $('#hero-slider-handle');
+  const heroTelemetryLabel = $('#hero-telemetry-label');
+  const heroDescDamaged = $('.hero-desc-damaged');
+  const heroDescRestored = $('.hero-desc-restored');
   const presetBtns = $$('.preset-btn');
   let currentRevealPercent = 0;
   let isDraggingHero = false;
@@ -65,6 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isRestored = percent >= 50;
     hero.classList.toggle('is-restored', isRestored);
+
+    if (heroTelemetryLabel) {
+      if (percent >= 80) {
+        heroTelemetryLabel.textContent = 'STATUS: FACTORY RESTORATION COMPLETE';
+      } else if (percent <= 20) {
+        heroTelemetryLabel.textContent = 'STATUS: IMPACT DAMAGE ASSESSMENT';
+      } else {
+        heroTelemetryLabel.textContent = `STATUS: SPLIT COMPARISON (${Math.round(percent)}%)`;
+      }
+    }
+
+    if (heroDescDamaged && heroDescRestored) {
+      heroDescDamaged.classList.toggle('active', !isRestored);
+      heroDescRestored.classList.toggle('active', isRestored);
+    }
 
     presetBtns.forEach(btn => {
       const p = parseInt(btn.dataset.preset, 10);

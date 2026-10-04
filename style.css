@@ -571,15 +571,79 @@ p {
   letter-spacing: -0.04em;
   line-height: 0.93;
   color: #fff;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
-.hero-description {
+/* Live Diagnostic Telemetry Pill */
+.hero-telemetry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(215, 53, 50, 0.12);
+  border: 1px solid rgba(215, 53, 50, 0.4);
+  border-radius: 20px;
+  margin-bottom: 16px;
+  transition: all 0.3s var(--ease);
+}
+
+.hero-telemetry-pill .telemetry-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+  transition: all 0.3s var(--ease);
+}
+
+.hero-telemetry-pill .telemetry-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ff8583;
+  transition: all 0.3s var(--ease);
+}
+
+/* When restored (>= 50%) */
+.hero.is-restored .hero-telemetry-pill {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+.hero.is-restored .hero-telemetry-pill .telemetry-dot {
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
+}
+
+.hero.is-restored .hero-telemetry-pill .telemetry-label {
+  color: #4ade80;
+}
+
+/* Locked grid description — identical height, zero jump */
+.hero-descriptions {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  min-height: 52px;
+  margin-bottom: 24px;
+}
+
+.hero-desc {
+  grid-area: 1 / 1;
   max-width: 480px;
   font-size: clamp(14px, 1.4vw, 16px);
   line-height: 1.6;
   color: #c4ccce;
-  margin: 0 0 28px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.hero-desc.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .hero-actions {
