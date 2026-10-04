@@ -563,7 +563,17 @@ p {
   line-height: 1.5;
 }
 
+.hero-headlines {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: start;
+  min-height: clamp(160px, 19vw, 290px);
+  margin-bottom: 18px;
+}
+
 .hero-title {
+  grid-area: 1 / 1;
   display: block;
   font-size: clamp(48px, 6.8vw, 104px);
   font-weight: 800;
@@ -571,7 +581,32 @@ p {
   letter-spacing: -0.04em;
   line-height: 0.93;
   color: #fff;
-  margin-bottom: 18px;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  will-change: opacity, transform;
+}
+
+.hero-title-damage {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.hero-title-restored {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.hero.is-restored .hero-title-damage {
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+}
+
+.hero.is-restored .hero-title-restored {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 /* Live Diagnostic Telemetry Pill */
