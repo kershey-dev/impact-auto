@@ -407,29 +407,32 @@ p {
 .hero-stage .hero-after {
   position: absolute;
   inset: 0;
-  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+  clip-path: inset(0 calc(100% - var(--reveal, 0%)) 0 0);
   filter: contrast(1.08) saturate(0.9);
-  transition: clip-path 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: clip-path 0.28s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: clip-path;
-}
-
-.hero.is-dragging .hero-after,
-.hero.is-dragging .scan-line {
-  transition: none !important;
 }
 
 .hero-stage .scan-line {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: var(--reveal);
+  left: var(--reveal, 0%);
   width: 2px;
   background: #fff;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(215, 53, 50, 0.7);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.9), 0 0 32px rgba(215, 53, 50, 0.7);
   z-index: 5;
-  transition: left 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transition: left 0.28s cubic-bezier(0.25, 1, 0.5, 1);
   pointer-events: none;
   will-change: left;
+}
+
+/* Zero latency and zero magnetic pull while dragging */
+.hero.is-dragging .hero-after,
+.hero.is-dragging .scan-line,
+.hero.is-dragging .slider-handle {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* Draggable Split Slider Handle */
@@ -570,71 +573,12 @@ p {
   color: #fff;
 }
 
-.hero-damage {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
-}
-
-.hero-restored {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
-}
-
-.hero.is-restored .hero-damage {
-  opacity: 0;
-  transform: translateY(-12px);
-  pointer-events: none;
-}
-
-.hero.is-restored .hero-restored {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
 .hero-description {
   max-width: 480px;
   font-size: clamp(14px, 1.4vw, 16px);
   line-height: 1.6;
   color: #c4ccce;
   margin: 20px 0 26px;
-}
-
-.hero-description-before {
-  opacity: 1;
-  transition: opacity 0.35s ease;
-}
-
-.hero-description-after {
-  position: absolute;
-  bottom: 80px;
-  left: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-}
-
-.hero.is-restored .hero-description-before {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.hero.is-restored .hero-description-after {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.hero.is-restored .hero-after {
-  clip-path: inset(0 0 0 0);
-}
-
-.hero.is-restored .scan-line {
-  left: 100%;
 }
 
 .hero-actions {

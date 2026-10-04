@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const presetBtns = $$('.preset-btn');
   let currentRevealPercent = 0;
   let isDraggingHero = false;
+  let rafId = null;
 
   function updateHeroReveal(percent, animate = false) {
     percent = Math.max(0, Math.min(100, percent));
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!hero) return;
     if (animate) {
       hero.classList.add('is-animating');
-      setTimeout(() => hero.classList.remove('is-animating'), 400);
+      setTimeout(() => hero.classList.remove('is-animating'), 300);
     }
 
     hero.style.setProperty('--reveal', `${percent}%`);
@@ -62,27 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
       heroSliderHandle.setAttribute('aria-valuenow', Math.round(percent));
     }
 
-    const isRestored = percent > 50;
-    hero.classList.toggle('is-restored', isRestored);
-
     presetBtns.forEach(btn => {
       const p = parseInt(btn.dataset.preset, 10);
-      const isMatch = Math.abs(p - percent) < 10;
+      const isMatch = Math.abs(p - percent) < 12;
       btn.classList.toggle('active', isMatch);
       btn.setAttribute('aria-pressed', String(isMatch));
     });
 
     if (heroToggle) {
+      const isRestored = percent > 50;
       const toggleText = heroToggle.querySelector('.toggle-text');
       if (toggleText) toggleText.textContent = isRestored ? 'Show Damaged' : 'Show Restored';
       heroToggle.setAttribute('aria-pressed', String(isRestored));
     }
 
     if (heroStatusTag) {
-      if (percent >= 85) {
+      if (percent >= 80) {
         heroStatusTag.textContent = 'STATUS: RESTORATION COMPLETE';
         heroStatusTag.style.color = '#4ade80';
-      } else if (percent <= 15) {
+      } else if (percent <= 20) {
         heroStatusTag.textContent = 'STATUS: IMPACT DAMAGE';
         heroStatusTag.style.color = 'var(--red)';
       } else {
@@ -90,55 +89,99 @@ document.addEventListener('DOMContentLoaded', () => {
         heroStatusTag.style.color = '#f59e0b';
       }
     }
-
-    if (heroAnnouncement) {
-      heroAnnouncement.textContent = isRestored
-        ? 'Restored vehicle road-ready.'
-        : 'Utility vehicle before repair with impact damage.';
-    }
   }
 
-  // Pointer drag handling on hero stage
-  function getHeroPercentFromEvent(e) {
+  function scheduleHeroReveal(percent) {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      updateHeroReveal(percent, false);
+    });
+  }
+
+  function getPercentFromClientX(clientX) {
     if (!heroStage) return 0;
     const rect = heroStage.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const x = clientX - rect.left;
     return Math.max(0, Math.min(100, (x / rect.width) * 100));
   }
 
   if (heroStage) {
-    const startDrag = (e) => {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchIntent = null; // 'scroll' or 'slider'
+
+    // Mouse drag handling
+    const onMouseDown = (e) => {
+      // Only drag with left mouse button
+      if (e.button !== 0) return;
       isDraggingHero = true;
       hero.classList.add('is-dragging');
-      // Hide drag prompt after first interaction
       const prompt = heroStage.querySelector('.handle-prompt');
       if (prompt) prompt.style.display = 'none';
-      updateHeroReveal(getHeroPercentFromEvent(e));
+      scheduleHeroReveal(getPercentFromClientX(e.clientX));
     };
 
-    const doDrag = (e) => {
+    const onMouseMove = (e) => {
       if (!isDraggingHero) return;
-      e.preventDefault();
-      updateHeroReveal(getHeroPercentFromEvent(e));
+      scheduleHeroReveal(getPercentFromClientX(e.clientX));
     };
 
-    const stopDrag = () => {
+    const onMouseUp = () => {
       if (isDraggingHero) {
         isDraggingHero = false;
         hero.classList.remove('is-dragging');
       }
     };
 
-    heroStage.addEventListener('mousedown', startDrag);
-    window.addEventListener('mousemove', doDrag);
-    window.addEventListener('mouseup', stopDrag);
+    heroStage.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
 
-    heroStage.addEventListener('touchstart', startDrag, { passive: true });
-    window.addEventListener('touchmove', doDrag, { passive: false });
-    window.addEventListener('touchend', stopDrag);
+    // Touch handling — Preserves NATURAL vertical page scroll
+    heroStage.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchIntent = null;
+    }, { passive: true });
 
-    // Keyboard support on slider handle
+    heroStage.addEventListener('touchmove', (e) => {
+      if (e.touches.length !== 1) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const dx = Math.abs(currentX - touchStartX);
+      const dy = Math.abs(currentY - touchStartY);
+
+      if (!touchIntent) {
+        if (dy > dx && dy > 6) {
+          touchIntent = 'scroll'; // Allow natural vertical page scrolling!
+        } else if (dx > dy && dx > 6) {
+          touchIntent = 'slider'; // User wants to slide the before/after!
+          isDraggingHero = true;
+          hero.classList.add('is-dragging');
+          const prompt = heroStage.querySelector('.handle-prompt');
+          if (prompt) prompt.style.display = 'none';
+        }
+      }
+
+      if (touchIntent === 'slider') {
+        if (e.cancelable) e.preventDefault();
+        scheduleHeroReveal(getPercentFromClientX(currentX));
+      }
+    }, { passive: false });
+
+    const onTouchEnd = () => {
+      touchIntent = null;
+      if (isDraggingHero) {
+        isDraggingHero = false;
+        hero.classList.remove('is-dragging');
+      }
+    };
+
+    heroStage.addEventListener('touchend', onTouchEnd, { passive: true });
+    heroStage.addEventListener('touchcancel', onTouchEnd, { passive: true });
+
+    // Keyboard accessibility for slider handle
     if (heroSliderHandle) {
       heroSliderHandle.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
