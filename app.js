@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroAnnouncement) {
       heroAnnouncement.textContent = isRestored
         ? 'Restored vehicle: road-ready.'
-        : 'Utility vehicle before repair with impact damage.';
+        : 'SUV before repair with impact damage.';
     }
 
     if (heroStatusTag) {

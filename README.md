@@ -71,7 +71,7 @@ The estimate form currently processes submissions and photo validation locally f
 │   ├── utility-before.webp  # Hero & Supporting Case 02: Damage
 │   ├── utility-after.webp   # Hero & Supporting Case 02: Restored
 │   ├── van-before.webp      # Supporting Case 03: Damage
-│   ├── van-after.webp       # Supporting Case 03: Restored (with privacy censor)
+│   ├── van-after.webp       # Supporting Case 03: Restored
 │   ├── van-bodywork.webp    # Teardown & bodywork photo
 │   ├── workshop-booth.jpg   # Spray booth facility photo
 │   └── manrope-*.ttf        # Variable typography
